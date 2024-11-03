@@ -1,0 +1,268 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOKJhcGyBFqmbdlooiDeD1v",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/anushchhatani/MAD_Assign3/blob/master/PS03_01\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "w6S56G-EeiwG",
+        "outputId": "b50631ef-1a0f-409c-e8a7-2ed7d1132b18"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: nltk in /usr/local/lib/python3.10/dist-packages (3.8.1)\n",
+            "Requirement already satisfied: click in /usr/local/lib/python3.10/dist-packages (from nltk) (8.1.7)\n",
+            "Requirement already satisfied: joblib in /usr/local/lib/python3.10/dist-packages (from nltk) (1.4.2)\n",
+            "Requirement already satisfied: regex>=2021.8.3 in /usr/local/lib/python3.10/dist-packages (from nltk) (2024.9.11)\n",
+            "Requirement already satisfied: tqdm in /usr/local/lib/python3.10/dist-packages (from nltk) (4.66.6)\n"
+          ]
+        }
+      ],
+      "source": [
+        "!pip install nltk"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "from nltk.tokenize import word_tokenize\n",
+        "from nltk.probability import FreqDist\n",
+        "import nltk\n",
+        "nltk.download('punkt')"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "D1TjCjAsfFL9",
+        "outputId": "18831d48-2d93-41e9-946e-1da99a882b3d"
+      },
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stderr",
+          "text": [
+            "[nltk_data] Downloading package punkt to /root/nltk_data...\n",
+            "[nltk_data]   Unzipping tokenizers/punkt.zip.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "True"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 5
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "text = \"\"\"Natural language processing (NLP) is a fascinating area of artificial intelligence.\n",
+        "It enables computers to understand and interpret human language. NLP is used in various applications like chatbots, translation, and sentiment analysis.\n",
+        "By breaking down language into smaller components, NLP helps machines gain insights from text data.\n",
+        "The potential applications of NLP are continuously expanding as technology advances.\"\"\""
+      ],
+      "metadata": {
+        "id": "YcUGS-ydff_u"
+      },
+      "execution_count": 6,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "tokens = word_tokenize(text)"
+      ],
+      "metadata": {
+        "id": "6jVtCBoefpdl"
+      },
+      "execution_count": 7,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(\"Tokens:\", tokens)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "owrzLkLqg0-4",
+        "outputId": "d21c2f46-fbc9-407f-b58d-e9f7f5735c39"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Tokens: ['Natural', 'language', 'processing', '(', 'NLP', ')', 'is', 'a', 'fascinating', 'area', 'of', 'artificial', 'intelligence', '.', 'It', 'enables', 'computers', 'to', 'understand', 'and', 'interpret', 'human', 'language', '.', 'NLP', 'is', 'used', 'in', 'various', 'applications', 'like', 'chatbots', ',', 'translation', ',', 'and', 'sentiment', 'analysis', '.', 'By', 'breaking', 'down', 'language', 'into', 'smaller', 'components', ',', 'NLP', 'helps', 'machines', 'gain', 'insights', 'from', 'text', 'data', '.', 'The', 'potential', 'applications', 'of', 'NLP', 'are', 'continuously', 'expanding', 'as', 'technology', 'advances', '.']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "num_tokens = len(tokens)\n",
+        "print(\"Number of tokens:\", num_tokens)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "brPed5jehBUE",
+        "outputId": "73964dc4-da62-48a2-c511-3512628096d4"
+      },
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Number of tokens: 68\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "frequency_dist = FreqDist(tokens)\n",
+        "print(\"Frequency of each token:\", frequency_dist)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "fhtlkz5ChEOB",
+        "outputId": "658223ba-a247-40b6-801d-f599b468a43d"
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Frequency of each token: <FreqDist with 53 samples and 68 outcomes>\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "print(\"Frequency distribution of tokens:\")\n",
+        "for token, freq in frequency_dist.items():\n",
+        "    print(f\"{token}: {freq}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "JwuRcexlhL9-",
+        "outputId": "9aab9094-c325-4dd8-92ee-5ffe96607d1c"
+      },
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Frequency distribution of tokens:\n",
+            "Natural: 1\n",
+            "language: 3\n",
+            "processing: 1\n",
+            "(: 1\n",
+            "NLP: 4\n",
+            "): 1\n",
+            "is: 2\n",
+            "a: 1\n",
+            "fascinating: 1\n",
+            "area: 1\n",
+            "of: 2\n",
+            "artificial: 1\n",
+            "intelligence: 1\n",
+            ".: 5\n",
+            "It: 1\n",
+            "enables: 1\n",
+            "computers: 1\n",
+            "to: 1\n",
+            "understand: 1\n",
+            "and: 2\n",
+            "interpret: 1\n",
+            "human: 1\n",
+            "used: 1\n",
+            "in: 1\n",
+            "various: 1\n",
+            "applications: 2\n",
+            "like: 1\n",
+            "chatbots: 1\n",
+            ",: 3\n",
+            "translation: 1\n",
+            "sentiment: 1\n",
+            "analysis: 1\n",
+            "By: 1\n",
+            "breaking: 1\n",
+            "down: 1\n",
+            "into: 1\n",
+            "smaller: 1\n",
+            "components: 1\n",
+            "helps: 1\n",
+            "machines: 1\n",
+            "gain: 1\n",
+            "insights: 1\n",
+            "from: 1\n",
+            "text: 1\n",
+            "data: 1\n",
+            "The: 1\n",
+            "potential: 1\n",
+            "are: 1\n",
+            "continuously: 1\n",
+            "expanding: 1\n",
+            "as: 1\n",
+            "technology: 1\n",
+            "advances: 1\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
